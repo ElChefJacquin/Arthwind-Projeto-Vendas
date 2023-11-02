@@ -1,0 +1,616 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.1",
+    "title": "Fast Vendas API",
+    "description": "<b><h2>API do site Fast Vendas, integre agora em sua aplicação e tenha mais velocidade e agilidade!</h2></b><br><i>(Todas as rotas precisam de autenticação, exceto as de autenticação em si, para gerar um token de autenticação, utilize a rota de login)</i>"
+  },
+  "host": "apivendas.me:21102",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "Autenticação",
+      "description": "Rotas para autenticação"
+    },
+    {
+      "name": "Categorias",
+      "description": "Rotas para gerenciar categorias"
+    },
+    {
+      "name": "Produtos",
+      "description": "Rotas para gerenciar produtos"
+    },
+    {
+      "name": "Vendas",
+      "description": "Rotas para lidar com as vendas"
+    }
+  ],
+  "paths": {
+    "/docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Retorna um JSON da documentação"
+          }
+        }
+      }
+    },
+    "/registrar": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "usuario": {
+                  "example": "John Doe"
+                },
+                "senha": {
+                  "example": "JohnDoePass!123"
+                },
+                "email": {
+                  "example": "JohnDoe@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "example": "JohnDoe"
+                },
+                "pass": {
+                  "example": "JohnDoePass!123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Usuário ou senha incorretos!"
+          },
+          "429": {
+            "description": "Você excedeu o limite de tentativas de login, tente novamente em 1 minuto."
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/envioemail/": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "email@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/recuperacaofinal": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "example": "token_de_recuperacao"
+                },
+                "senha": {
+                  "example": "nova_senha"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/cadcategoria": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Categorias"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Nome da Categoria"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/cadprodutos": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Nome do Produto"
+                },
+                "quantidade": {
+                  "example": 10
+                },
+                "categoria": {
+                  "example": "Nome da Categoria"
+                },
+                "precocompra": {
+                  "example": 20.99
+                },
+                "precovenda": {
+                  "example": 29.99
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/cadvenda": {
+      "post": {
+        "description": "",
+        "tags": [
+          "Vendas"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "produto": {
+                  "example": "Nome do Produto"
+                },
+                "quantidade": {
+                  "example": 5
+                },
+                "lucrototal": {
+                  "example": 30
+                },
+                "precototal": {
+                  "example": 49.99
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Solicitação Inválida"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/listarprodutos/": {
+      "get": {
+        "description": "",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/listarcategorias/": {
+      "get": {
+        "description": "",
+        "tags": [
+          "Categorias"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/listarvendas/": {
+      "get": {
+        "description": "",
+        "tags": [
+          "Vendas"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/listarvendasmes/": {
+      "get": {
+        "description": "",
+        "tags": [
+          "Vendas"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Não Encontrado"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/deletarproduto/{id}": {
+      "delete": {
+        "description": "",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "406": {
+            "description": "Não Aceitável"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/ocultarproduto/{id}": {
+      "delete": {
+        "description": "",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/deletarcategoria/{id}/": {
+      "delete": {
+        "description": "",
+        "tags": [
+          "Categorias"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/editarproduto/{id}": {
+      "put": {
+        "description": "Se algum dos campos não for informado, não se preocupe, a API apenas ignorará o campo e irá para o próximo :)",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "Novo Nome do Produto"
+                },
+                "quantidade": {
+                  "example": 15
+                },
+                "categoria": {
+                  "example": "ID da Nova Categoria"
+                },
+                "precocompra": {
+                  "example": 25.99
+                },
+                "precovenda": {
+                  "example": 34.99
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    },
+    "/editarcategoria/": {
+      "put": {
+        "description": "",
+        "tags": [
+          "Categorias"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "ID_da_Categoria"
+                },
+                "nome": {
+                  "example": "Novo Nome da Categoria"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Erro Interno do Servidor"
+          }
+        }
+      }
+    }
+  }
+}
